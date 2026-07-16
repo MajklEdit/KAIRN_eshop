@@ -16,24 +16,24 @@
           "type": "product",
           "settings": {
             "title": "Snake chain necklace",
-            "description": "Kulaty retizek 2mm z chirurgicke oceli 316L. Cisty. Nadcasovy. Pro kazdy den.",
-            "price": "890 Kc"
+            "description": "Kulatý řetízek 2mm z chirurgické oceli 316L. Čistý. Nadčasový. Pro každý den.",
+            "price": "890 Kč"
           }
         },
         "product_02": {
           "type": "product",
           "settings": {
             "title": "Double-layer bracelet",
-            "description": "Dvouvrstvy naramek s jemnym profilem. Minimalismus, ktery vynikne.",
-            "price": "790 Kc"
+            "description": "Dvouvrstvý náramek s jemným profilem. Minimalismus, který vynikne.",
+            "price": "790 Kč"
           }
         },
         "product_03": {
           "type": "product",
           "settings": {
             "title": "Knotted bracelet",
-            "description": "Uzlovy motiv jako symbol zavazku. Lehky, odolny, unisex.",
-            "price": "590 Kc"
+            "description": "Uzlový motiv jako symbol závazku. Lehký, odolný, unisex.",
+            "price": "590 Kč"
           }
         }
       },
