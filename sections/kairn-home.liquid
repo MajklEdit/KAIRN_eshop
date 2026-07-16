@@ -49,9 +49,10 @@
     z-index: 100;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "logo actions";
     align-items: center;
-    gap: clamp(22px, 4vw, 64px);
+    gap: 20px;
     padding: 24px clamp(22px, 3vw, 48px);
     background: transparent;
     border-bottom: 1px solid transparent;
@@ -76,16 +77,30 @@
   }
 
   .kairn-hamburger {
-    display: none;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
     padding: 0;
     border: none;
     background: none;
     color: inherit;
     cursor: pointer;
+  }
+
+  .kairn-hamburger-bars {
+    display: grid;
+    width: 21px;
+    gap: 4px;
+  }
+
+  .kairn-hamburger-bars span {
+    display: block;
+    height: 1.5px;
+    border-radius: 999px;
+    background: currentColor;
   }
 
   .kairn-hamburger svg {
@@ -107,6 +122,7 @@
   }
 
   .kairn-logo {
+    grid-area: logo;
     justify-self: start;
     display: inline-flex;
     align-items: center;
@@ -121,23 +137,76 @@
   }
 
   .kairn-menu {
-    justify-self: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(28px, 5vw, 76px);
-    font-size: 0.78rem;
+    position: absolute;
+    top: calc(100% - 2px);
+    right: clamp(22px, 3vw, 48px);
+    display: none;
+    width: min(340px, calc(100vw - 44px));
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 10px 20px 18px;
+    border: 1px solid rgba(245, 243, 238, 0.14);
+    background: rgba(8, 8, 8, 0.96);
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.46);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    white-space: nowrap;
+  }
+
+  .kairn-nav.is-menu-open .kairn-menu {
+    display: flex;
+  }
+
+  .kairn-menu > a {
+    width: 100%;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(245, 243, 238, 0.1);
+  }
+
+  .kairn-menu > a:hover {
+    color: #fff;
+  }
+
+  .kairn-menu > a:last-of-type {
+    border-bottom: none;
+  }
+
+  .kairn-menu-utility {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 4px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(245, 243, 238, 0.1);
+    color: rgba(245, 243, 238, 0.76);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+  }
+
+  .kairn-menu-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font: inherit;
+  }
+
+  .kairn-menu-account .kairn-icon {
+    width: 18px;
+    height: 18px;
   }
 
   .kairn-actions {
+    grid-area: actions;
     justify-self: end;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     color: rgba(245, 243, 238, 0.86);
     font-size: 0.82rem;
     font-weight: 800;
@@ -173,6 +242,16 @@
     align-items: center;
     justify-content: center;
     color: currentColor;
+  }
+
+  .kairn-actions .kairn-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .kairn-actions .kairn-icon svg {
+    width: 22px;
+    height: 22px;
   }
 
   .kairn-icon svg {
@@ -564,8 +643,6 @@
     }
 
     .kairn-nav {
-      grid-template-columns: 1fr auto;
-      grid-template-areas: "logo actions";
       padding: 18px;
     }
 
@@ -574,55 +651,18 @@
       padding-block: 14px;
     }
 
-    .kairn-logo {
-      grid-area: logo;
-    }
-
-    .kairn-hamburger {
-      display: inline-flex;
-      order: -1;
-    }
-
     .kairn-menu {
-      display: none;
-      position: absolute;
-      grid-column: 1 / -1;
-      justify-self: stretch;
-      top: 100%;
-      left: 0;
-      right: 0;
+      top: calc(100% - 2px);
+      right: 16px;
+      left: 16px;
       width: auto;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: flex-start;
-      gap: 0;
-      padding: 6px 18px calc(24px + env(safe-area-inset-bottom));
-      background: rgba(5, 5, 5, 0.97);
-      border-top: 1px solid rgba(245, 243, 238, 0.12);
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
-      max-height: calc(100vh - 100%);
+      padding: 10px 18px calc(18px + env(safe-area-inset-bottom));
+      max-height: calc(100svh - 84px);
       overflow-y: auto;
     }
 
-    .kairn-nav.is-menu-open .kairn-menu {
-      display: flex;
-    }
-
-    .kairn-menu a {
-      width: 100%;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(245, 243, 238, 0.1);
-      font-size: 0.92rem;
-    }
-
-    .kairn-menu a:last-child {
-      border-bottom: none;
-    }
-
     .kairn-actions {
-      grid-area: actions;
-      gap: 14px;
+      gap: 8px;
     }
 
     .kairn-hero {
@@ -683,8 +723,13 @@
       font-size: 0.72rem;
     }
 
-    .kairn-icon,
+    .kairn-actions .kairn-icon,
     .kairn-hamburger {
+      width: 36px;
+      height: 36px;
+    }
+
+    .kairn-actions .kairn-icon svg {
       width: 20px;
       height: 20px;
     }
@@ -735,8 +780,22 @@
       <a href="#o-nas">O nás</a>
       <a href="#materialy">Materiály</a>
       <a href="/pages/contact">Kontakt</a>
+      <div class="kairn-menu-utility">
+        <a class="kairn-menu-account" href="{{ routes.account_url }}">
+          <span class="kairn-icon" aria-hidden="true">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          Účet
+        </a>
+        <span class="kairn-currency">
+          {{ localization.country.currency.iso_code | default: 'CZK' }}
+          <span class="kairn-caret" aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+        </span>
+      </div>
     </nav>
     <div class="kairn-actions">
+      <a class="kairn-icon" href="{{ routes.cart_url }}" aria-label="Košík">
+        {{ 'icon-cart.svg' | inline_asset_content }}
+        <span class="kairn-cart-bubble" aria-hidden="true">{{ cart.item_count }}</span>
+      </a>
       <button
         type="button"
         class="kairn-hamburger"
@@ -744,21 +803,10 @@
         aria-expanded="false"
         aria-controls="kairn-mobile-menu"
       >
-        <span data-icon-open aria-hidden="true">{{ 'icon-menu.svg' | inline_asset_content }}</span>
+        <span class="kairn-hamburger-bars" data-icon-open aria-hidden="true"><span></span><span></span><span></span></span>
         <span data-icon-close aria-hidden="true">{{ 'icon-close.svg' | inline_asset_content }}</span>
         <span class="visually-hidden">Menu</span>
       </button>
-      <span class="kairn-currency">
-        {{ localization.country.currency.iso_code | default: 'CZK' }}
-        <span class="kairn-caret" aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
-      </span>
-      <a class="kairn-icon" href="{{ routes.account_url }}" aria-label="Účet">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </a>
-      <a class="kairn-icon" href="{{ routes.cart_url }}" aria-label="Košík">
-        {{ 'icon-cart.svg' | inline_asset_content }}
-        <span class="kairn-cart-bubble" aria-hidden="true">{{ cart.item_count }}</span>
-      </a>
     </div>
   </header>
 
