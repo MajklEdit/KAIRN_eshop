@@ -752,16 +752,17 @@
 
       const SCROLL_THRESHOLD = 24;
 
-      // Horizon renders the storefront inside a scrollable wrapper
-      // (html/body use overflow-y: hidden), so window.scrollY never
-      // changes. Fall back to window only if that wrapper is absent.
-      const scroller = document.querySelector('.page-wrapper') || window;
+      // Horizon scrolls a wrapping div.page-wrapper on wider/desktop
+      // layouts (html/body get overflow-y: hidden there), but on
+      // narrow/mobile layouts that wrapper is static and the window
+      // itself scrolls instead. Rather than guess which applies,
+      // read both and take whichever has actually moved.
+      const pageWrapper = document.querySelector('.page-wrapper');
 
       const getScrollTop = () => {
-        if (scroller === window) {
-          return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        }
-        return scroller.scrollTop;
+        const windowTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const wrapperTop = pageWrapper ? pageWrapper.scrollTop : 0;
+        return Math.max(windowTop, wrapperTop);
       };
 
       const updateNav = () => {
@@ -771,7 +772,8 @@
 
       updateNav();
       requestAnimationFrame(updateNav);
-      scroller.addEventListener('scroll', updateNav, { passive: true });
+      window.addEventListener('scroll', updateNav, { passive: true });
+      if (pageWrapper) pageWrapper.addEventListener('scroll', updateNav, { passive: true });
       window.addEventListener('resize', updateNav);
     };
 
