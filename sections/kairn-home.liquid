@@ -33,16 +33,38 @@
   }
 
   .kairn-nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 3;
+    z-index: 40;
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1fr);
     align-items: center;
     gap: clamp(22px, 4vw, 64px);
     padding-block: 34px;
+    border: 1px solid transparent;
+    background: transparent;
+    transition:
+      top 220ms ease,
+      padding 220ms ease,
+      border-color 220ms ease,
+      border-radius 220ms ease,
+      background 220ms ease,
+      box-shadow 220ms ease,
+      backdrop-filter 220ms ease;
+  }
+
+  .kairn-nav.is-scrolled {
+    top: 14px;
+    padding: 15px clamp(22px, 3vw, 36px);
+    border-color: rgba(245, 243, 238, 0.16);
+    border-radius: 999px;
+    background: rgba(7, 7, 7, 0.58);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
   }
 
   .kairn-logo {
@@ -477,6 +499,12 @@
       padding-block: 24px;
     }
 
+    .kairn-nav.is-scrolled {
+      top: 10px;
+      padding: 15px 18px;
+      border-radius: 28px;
+    }
+
     .kairn-logo {
       grid-area: logo;
     }
@@ -527,6 +555,11 @@
       padding-block: 20px;
     }
 
+    .kairn-nav.is-scrolled {
+      padding: 14px;
+      border-radius: 24px;
+    }
+
     .kairn-logo {
       font-size: clamp(1rem, 5vw, 1.35rem);
       letter-spacing: 0.2em;
@@ -564,7 +597,7 @@
 
 <section class="kairn-home">
   <div class="kairn-hero">
-    <header class="kairn-nav kairn-shell">
+    <header class="kairn-nav kairn-shell" data-kairn-nav>
       <a class="kairn-logo" href="{{ routes.root_url }}" aria-label="KAIRN">KAIRN</a>
       <nav class="kairn-menu" aria-label="Main navigation">
         <a href="{{ collection_link }}">Kolekce</a>
@@ -707,6 +740,22 @@
     </div>
   </section>
 </section>
+
+<script>
+  (() => {
+    const navs = document.querySelectorAll('[data-kairn-nav]');
+
+    if (!navs.length) return;
+
+    const updateNav = () => {
+      const isScrolled = window.scrollY > 24;
+      navs.forEach((nav) => nav.classList.toggle('is-scrolled', isScrolled));
+    };
+
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+  })();
+</script>
 
 {% schema %}
 {
