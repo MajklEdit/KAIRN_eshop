@@ -752,14 +752,26 @@
 
       const SCROLL_THRESHOLD = 24;
 
+      // Horizon renders the storefront inside a scrollable wrapper
+      // (html/body use overflow-y: hidden), so window.scrollY never
+      // changes. Fall back to window only if that wrapper is absent.
+      const scroller = document.querySelector('.page-wrapper') || window;
+
+      const getScrollTop = () => {
+        if (scroller === window) {
+          return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        }
+        return scroller.scrollTop;
+      };
+
       const updateNav = () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const scrollTop = getScrollTop();
         navs.forEach((nav) => nav.classList.toggle('is-scrolled', scrollTop > SCROLL_THRESHOLD));
       };
 
       updateNav();
       requestAnimationFrame(updateNav);
-      window.addEventListener('scroll', updateNav, { passive: true });
+      scroller.addEventListener('scroll', updateNav, { passive: true });
       window.addEventListener('resize', updateNav);
     };
 
