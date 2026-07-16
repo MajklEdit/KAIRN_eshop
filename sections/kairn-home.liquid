@@ -38,26 +38,26 @@
     left: 0;
     right: 0;
     z-index: 3;
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1fr);
     align-items: center;
-    justify-content: space-between;
-    gap: clamp(12px, 4vw, 56px);
+    gap: clamp(22px, 4vw, 64px);
     padding-block: 34px;
   }
 
   .kairn-logo {
-    flex: 0 0 auto;
+    justify-self: start;
     font-size: clamp(1.45rem, 2.8vw, 2.35rem);
     letter-spacing: 0.28em;
     font-weight: 500;
   }
 
   .kairn-menu {
+    justify-self: center;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: clamp(8px, 2vw, 28px);
-    min-width: 0;
+    justify-content: center;
+    gap: clamp(28px, 5vw, 76px);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.12em;
@@ -65,9 +65,68 @@
     white-space: nowrap;
   }
 
-  .kairn-menu-separator {
-    color: rgba(245, 243, 238, 0.42);
-    font-weight: 700;
+  .kairn-actions {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: rgba(245, 243, 238, 0.86);
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  .kairn-currency {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  .kairn-caret {
+    width: 12px;
+    height: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.76;
+  }
+
+  .kairn-caret svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .kairn-icon {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+
+  .kairn-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .kairn-cart-bubble {
+    position: absolute;
+    top: -9px;
+    right: -10px;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--kairn-ink);
+    color: #080808;
+    font-size: 0.66rem;
+    font-weight: 900;
+    line-height: 1;
   }
 
   .kairn-hero {
@@ -409,10 +468,30 @@
       width: min(100% - 32px, var(--kairn-max));
     }
 
+    .kairn-nav {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "logo actions"
+        "menu menu";
+      row-gap: 18px;
+      padding-block: 24px;
+    }
+
+    .kairn-logo {
+      grid-area: logo;
+    }
+
     .kairn-menu {
-      gap: clamp(7px, 1.8vw, 14px);
-      font-size: clamp(0.56rem, 2.2vw, 0.72rem);
+      grid-area: menu;
+      justify-self: center;
+      gap: clamp(18px, 5vw, 42px);
+      font-size: clamp(0.62rem, 2.1vw, 0.76rem);
       letter-spacing: 0.08em;
+    }
+
+    .kairn-actions {
+      grid-area: actions;
+      gap: 14px;
     }
 
     .kairn-hero {
@@ -444,8 +523,8 @@
     }
 
     .kairn-nav {
-      gap: 10px;
-      padding-block: 22px;
+      row-gap: 16px;
+      padding-block: 20px;
     }
 
     .kairn-logo {
@@ -454,9 +533,19 @@
     }
 
     .kairn-menu {
-      gap: 6px;
-      font-size: clamp(0.5rem, 2vw, 0.62rem);
+      gap: clamp(10px, 3.3vw, 18px);
+      font-size: clamp(0.5rem, 2.25vw, 0.62rem);
       letter-spacing: 0.04em;
+    }
+
+    .kairn-actions {
+      gap: 11px;
+      font-size: 0.72rem;
+    }
+
+    .kairn-icon {
+      width: 19px;
+      height: 19px;
     }
 
     .kairn-title {
@@ -478,15 +567,24 @@
     <header class="kairn-nav kairn-shell">
       <a class="kairn-logo" href="{{ routes.root_url }}" aria-label="KAIRN">KAIRN</a>
       <nav class="kairn-menu" aria-label="Main navigation">
-        <span class="kairn-menu-separator" aria-hidden="true">|</span>
         <a href="{{ collection_link }}">Kolekce</a>
-        <span class="kairn-menu-separator" aria-hidden="true">|</span>
-        <a href="#o-nas">O nas</a>
-        <span class="kairn-menu-separator" aria-hidden="true">|</span>
-        <a href="/pages/contact">Kontakt</a>
-        <span class="kairn-menu-separator" aria-hidden="true">|</span>
+        <a href="#o-nas">O n&aacute;s</a>
         <a href="{{ collection_link }}">FireUp alpha</a>
+        <a href="/pages/contact">Kontakt</a>
       </nav>
+      <div class="kairn-actions">
+        <span class="kairn-currency">
+          {{ localization.country.currency.iso_code | default: 'CZK' }}
+          <span class="kairn-caret" aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+        </span>
+        <a class="kairn-icon" href="{{ routes.account_url }}" aria-label="Account">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+        <a class="kairn-icon" href="{{ routes.cart_url }}" aria-label="Cart">
+          {{ 'icon-cart.svg' | inline_asset_content }}
+          <span class="kairn-cart-bubble" aria-hidden="true">{{ cart.item_count }}</span>
+        </a>
+      </div>
     </header>
 
     <div class="kairn-shell">
