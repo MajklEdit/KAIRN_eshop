@@ -34,7 +34,7 @@
 
   .kairn-nav {
     position: fixed;
-    top: 0;
+    top: 14px;
     left: 0;
     right: 0;
     z-index: 40;
@@ -43,9 +43,16 @@
     grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1fr);
     align-items: center;
     gap: clamp(22px, 4vw, 64px);
-    padding-block: 34px;
-    border: 1px solid transparent;
-    background: transparent;
+    padding: 15px clamp(22px, 3vw, 36px);
+    overflow: hidden;
+    border: 1px solid rgba(245, 243, 238, 0.22);
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+      rgba(3, 3, 3, 0.84);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.54);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
     transition:
       top 220ms ease,
       padding 220ms ease,
@@ -56,17 +63,15 @@
       backdrop-filter 220ms ease;
   }
 
-  .kairn-nav.is-scrolled {
-    top: 14px;
-    padding: 15px clamp(22px, 3vw, 36px);
-    border-color: rgba(245, 243, 238, 0.22);
-    border-radius: 999px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-      rgba(3, 3, 3, 0.82);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.54);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
+  .kairn-nav.is-at-top {
+    top: 0;
+    padding: 34px 0;
+    border-color: transparent;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .kairn-logo {
@@ -501,10 +506,16 @@
       padding-block: 24px;
     }
 
-    .kairn-nav.is-scrolled {
+    .kairn-nav {
       top: 10px;
       padding: 15px 18px;
       border-radius: 28px;
+    }
+
+    .kairn-nav.is-at-top {
+      top: 0;
+      padding: 24px 0;
+      border-radius: 0;
     }
 
     .kairn-logo {
@@ -557,9 +568,14 @@
       padding-block: 20px;
     }
 
-    .kairn-nav.is-scrolled {
+    .kairn-nav {
       padding: 14px;
       border-radius: 24px;
+    }
+
+    .kairn-nav.is-at-top {
+      padding: 20px 0;
+      border-radius: 0;
     }
 
     .kairn-logo {
@@ -752,7 +768,7 @@
 
       const updateNav = () => {
         const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        navs.forEach((nav) => nav.classList.toggle('is-scrolled', scrollTop > 8));
+        navs.forEach((nav) => nav.classList.toggle('is-at-top', scrollTop <= 8));
       };
 
       updateNav();
