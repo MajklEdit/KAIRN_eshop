@@ -43,7 +43,8 @@
         "product_03"
       ],
       "settings": {
-        "collection_link": "shopify://collections/all"
+        "collection_link": "shopify://collections/all",
+        "hero_heading_font": "bebas_neue_n4"
       }
     }
   },
