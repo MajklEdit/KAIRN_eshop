@@ -3,8 +3,9 @@
 %}
 
 <style>
-  #header-group {
-    display: none;
+  #header-group,
+  .shopify-section-group-header-group {
+    display: none !important;
   }
 
   .kairn-home {
@@ -37,15 +38,16 @@
     left: 0;
     right: 0;
     z-index: 3;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
-    gap: 24px;
+    justify-content: space-between;
+    gap: clamp(12px, 4vw, 56px);
     padding-block: 34px;
   }
 
   .kairn-logo {
-    font-size: clamp(1.65rem, 3vw, 2.35rem);
+    flex: 0 0 auto;
+    font-size: clamp(1.45rem, 2.8vw, 2.35rem);
     letter-spacing: 0.28em;
     font-weight: 500;
   }
@@ -53,30 +55,19 @@
   .kairn-menu {
     display: flex;
     align-items: center;
-    gap: clamp(26px, 4vw, 58px);
+    justify-content: flex-end;
+    gap: clamp(8px, 2vw, 28px);
+    min-width: 0;
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  .kairn-actions {
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    color: rgba(245, 243, 238, 0.82);
-    font-size: 0.82rem;
-    font-weight: 800;
-  }
-
-  .kairn-icon {
-    width: 22px;
-    height: 22px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: currentColor;
+  .kairn-menu-separator {
+    color: rgba(245, 243, 238, 0.42);
+    font-weight: 700;
   }
 
   .kairn-hero {
@@ -418,17 +409,10 @@
       width: min(100% - 32px, var(--kairn-max));
     }
 
-    .kairn-nav {
-      grid-template-columns: 1fr auto;
-      padding-block: 24px;
-    }
-
     .kairn-menu {
-      display: none;
-    }
-
-    .kairn-actions {
-      gap: 12px;
+      gap: clamp(7px, 1.8vw, 14px);
+      font-size: clamp(0.56rem, 2.2vw, 0.72rem);
+      letter-spacing: 0.08em;
     }
 
     .kairn-hero {
@@ -455,6 +439,26 @@
   }
 
   @media (max-width: 560px) {
+    .kairn-shell {
+      width: min(100% - 28px, var(--kairn-max));
+    }
+
+    .kairn-nav {
+      gap: 10px;
+      padding-block: 22px;
+    }
+
+    .kairn-logo {
+      font-size: clamp(1rem, 5vw, 1.35rem);
+      letter-spacing: 0.2em;
+    }
+
+    .kairn-menu {
+      gap: 6px;
+      font-size: clamp(0.5rem, 2vw, 0.62rem);
+      letter-spacing: 0.04em;
+    }
+
     .kairn-title {
       font-size: clamp(3.1rem, 15vw, 4.5rem);
     }
@@ -474,20 +478,15 @@
     <header class="kairn-nav kairn-shell">
       <a class="kairn-logo" href="{{ routes.root_url }}" aria-label="KAIRN">KAIRN</a>
       <nav class="kairn-menu" aria-label="Main navigation">
+        <span class="kairn-menu-separator" aria-hidden="true">|</span>
         <a href="{{ collection_link }}">Kolekce</a>
+        <span class="kairn-menu-separator" aria-hidden="true">|</span>
         <a href="#o-nas">O nas</a>
-        <a href="#materialy">Materialy</a>
+        <span class="kairn-menu-separator" aria-hidden="true">|</span>
         <a href="/pages/contact">Kontakt</a>
+        <span class="kairn-menu-separator" aria-hidden="true">|</span>
+        <a href="{{ collection_link }}">FireUp alpha</a>
       </nav>
-      <div class="kairn-actions">
-        <span>{{ localization.country.currency.iso_code }}</span>
-        <a class="kairn-icon" href="{{ routes.account_url }}" aria-label="Account">
-          {{ 'icon-account.svg' | inline_asset_content }}
-        </a>
-        <a class="kairn-icon" href="{{ routes.cart_url }}" aria-label="Cart">
-          {{ 'icon-cart.svg' | inline_asset_content }}
-        </a>
-      </div>
     </header>
 
     <div class="kairn-shell">
